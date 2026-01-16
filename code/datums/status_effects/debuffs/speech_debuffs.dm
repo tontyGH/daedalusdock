@@ -68,7 +68,7 @@
 	if(!.)
 		return
 	if(!stutter_characters)
-		stutter_characters = (GLOB.consonants_lower + GLOB.consonants_upper)
+		stutter_characters = (GLOB.consonants_lower + GLOB.consonants_upper + GLOB.numerals)
 
 /datum/status_effect/speech/stutter/apply_speech(original_char, modified_char)
 	if(prob(stutter_prob) && (original_char in stutter_characters))
