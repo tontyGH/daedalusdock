@@ -60,18 +60,18 @@
 	id = "stutter"
 	/// The probability of adding a stutter to any character
 	var/stutter_prob = 80
-	/// Regex of characters we won't apply a stutter to
-	var/static/regex/no_stutter
+	/// List characters we'll apply a stutter to
+	var/static/list/stutter_characters
 
 /datum/status_effect/speech/stutter/on_creation(mob/living/new_owner, ...)
 	. = ..()
 	if(!.)
 		return
-	if(!no_stutter)
-		no_stutter = regex(@@[aeiouAEIOU ""''()[\]{}.!?,:;_`~-]@)
+	if(!stutter_characters)
+		stutter_characters = (GLOB.consonants_lower + GLOB.consonants_upper)
 
 /datum/status_effect/speech/stutter/apply_speech(original_char, modified_char)
-	if(prob(stutter_prob) && !no_stutter.Find(original_char))
+	if(prob(stutter_prob) && (original_char in stutter_characters))
 		if(prob(10))
 			modified_char = "[modified_char]-[modified_char]-[modified_char]-[modified_char]"
 		else if(prob(20))
